@@ -15,7 +15,7 @@ const FastImageViewNativeModule = NativeModules.FastImageView
 
 const IS_ANDROID = Platform.OS === 'android';
 
-const IOS_EXTENSION_REG = /.[a-z]+$/;
+const IOS_EXTENSION_REG = /\.[a-z]+$/;
 
 function FastImageBase({
     source,
@@ -37,7 +37,7 @@ function FastImageBase({
     if (IS_ANDROID && source instanceof Object && styleBorderRadius > 0) {
         const borderRadius = Math.round(PixelRatio.getPixelSizeForLayoutSize(styleBorderRadius));
         resolvedSource = Object.assign({}, source, { borderRadius });
-    } else if (!IS_ANDROID && !IOS_EXTENSION_REG.test(source.uri)) {
+    } else if (!IS_ANDROID && source && !IOS_EXTENSION_REG.test(source.uri)) {
         resolvedSource = { uri: source.uri + '.jpg' };
     } else {
         resolvedSource = source;
