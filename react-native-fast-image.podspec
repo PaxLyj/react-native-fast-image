@@ -20,5 +20,5 @@ Pod::Spec.new do |s|
   s.exclude_files = "ios/Vendor/**/*.{h,m}"
 
   s.dependency 'React'
-  s.dependency 'SDWebImage', '~> 5.0'
+  s.dependency 'SDWebImage', '5.0.5'
 end
