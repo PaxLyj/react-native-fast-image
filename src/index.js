@@ -31,15 +31,18 @@ function FastImageBase({
     forwardedRef,
     ...props
 }) {
-    const styleBorderRadius = (Array.isArray(style) ? StyleSheet.flatten(style) : style).borderRadius || 0;
     let resolvedSource = null;
 
-    if (IS_ANDROID && source instanceof Object && styleBorderRadius > 0) {
-        const borderRadius = Math.round(PixelRatio.getPixelSizeForLayoutSize(styleBorderRadius));
-        resolvedSource = Object.assign({}, source, { borderRadius });
-    } else if (!IS_ANDROID && source && !IOS_EXTENSION_REG.test(source.uri)) {
-        resolvedSource = { uri: source.uri + '.jpg' };
-    } else {
+    if (IS_ANDROID && source instanceof Object) {
+        const styleBorderRadius = (Array.isArray(style) ? StyleSheet.flatten(style) : style).borderRadius || 0;
+
+        if (styleBorderRadius > 0) {
+            const borderRadius = Math.round(PixelRatio.getPixelSizeForLayoutSize(styleBorderRadius));
+            resolvedSource = Object.assign({}, source, { borderRadius });
+        }
+    }
+
+    if (resolvedSource === null) {
         resolvedSource = source;
     }
 
